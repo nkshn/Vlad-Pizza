@@ -4,8 +4,7 @@ class Product {
     ID,
     ID_subCategory,
     name,
-    // price,
-    // For correct layout
+    // For layout
     isSmallSize,
     isMediumSize,
     isLargeSize,
@@ -22,8 +21,7 @@ class Product {
     this.ID = ID;
     this.ID_subCategory = ID_subCategory;
     this.name = name;
-    this.price = price;
-    // For correct layout
+    // For layout
     this.isSmallSize = isSmallSize;
     this.isMediumSize = isMediumSize;
     this.isLargeSize = isLargeSize;

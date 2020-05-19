@@ -11,7 +11,7 @@ import ProductItem from '../components/shop/ProductItem';
 const HomeScreen = ({ route }) => {
   const renderItem_2 = (itemData_2) => {
     return (
-      <ProductItem name={itemData_2.item.name} price={itemData_2.item.price} />
+      <ProductItem productData={itemData_2.item} />
     );
   };
 
