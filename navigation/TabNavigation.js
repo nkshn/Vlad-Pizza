@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 // Navigation
@@ -7,12 +6,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // Stacks Navigation
 import HomeStackNavigation from './HomeStackNavigation';
-// import CartStackNavigation from './CartStackNavigation';
+import CartStackNavigation from './CartStackNavigation';
 // import OrdersStackNavigation from './OrdersStackNavigation';
 
 // Screens
-import HomeScreen from '../screens/HomeScreen';
-import CartScreen from '../screens/CartScreen';
 import OrdersScreen from '../screens/OrdersScreen';
 
 const Tab = createBottomTabNavigator();
@@ -42,7 +39,7 @@ const TabNavigation = () => {
       }}
     >
       <Tab.Screen name="Home" component={HomeStackNavigation} />
-      <Tab.Screen name="Cart" component={CartScreen} />
+      <Tab.Screen name="Cart" component={CartStackNavigation} />
       <Tab.Screen name="Orders" component={OrdersScreen} />
     </Tab.Navigator>
   );

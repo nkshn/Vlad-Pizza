@@ -13,7 +13,7 @@ const ProductItem = (props) => {
   const [isMediumSizeSelected, setIsMediumSizeSelected] = useState(false);
   const [isLargeSizeSelected, setIsLargeSizeSelected] = useState(false);
 
-  const changeProductVariable = (value) => {
+  const changeProductSelectedState = (value) => {
     setIsProductSelected(!value);
   };
 
@@ -113,7 +113,7 @@ const ProductItem = (props) => {
                   : true)
               }
               onPress={() => {
-                changeProductVariable(isProductSelected);
+                changeProductSelectedState(isProductSelected);
                 setIsSmallSizeSelected(false);
                 setIsMediumSizeSelected(false);
                 setIsLargeSizeSelected(false);
