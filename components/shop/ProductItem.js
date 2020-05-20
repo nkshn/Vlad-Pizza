@@ -27,14 +27,69 @@ const ProductItem = (props) => {
     setIsLargeSizeSelected(!value);
   };
 
+  let gridCounter = 0;
+  if (productData.isSmallSize == true) { gridCounter += 1; }
+  if (productData.isMediumSize == true) { gridCounter += 1; }
+  if (productData.isLargeSize == true) { gridCounter += 1; }
+
+  const GridWithPickerButtons = () => {
+    if (gridCounter == 3) {
+      return (
+        <View style={styles.buttonsContainer}>
+          <PickerButton
+            stylesContainer={{ width: 90 }}
+            stylesBadge={{ left: 37 }}
+            size={productData.smallSizeName}
+            price={productData.smallSizePrice}
+            variable={isSmallSizeSelected}
+            function={smallSizeHandler} />
+          <PickerButton
+            stylesContainer={{ width: 90 }}
+            stylesBadge={{ left: 37 }}
+            size={productData.mediumSizeName}
+            price={productData.mediumSizePrice}
+            variable={isMediumSizeSelected}
+            function={mediumSizeHandler} />
+          <PickerButton
+            stylesContainer={{ width: 90 }}
+            stylesBadge={{ left: 37 }}
+            size={productData.largeSizeName}
+            price={productData.largeSizePrice}
+            variable={isLargeSizeSelected}
+            function={largeSizeHandler} />
+        </View>
+      )
+    }
+    else if (gridCounter == 2) {
+      return (
+        <View style={[styles.buttonsContainer, { justifyContent: 'space-around' }]}>
+          <PickerButton
+            stylesContainer={{ width: 130 }}
+            stylesBadge={{ left: 55 }}
+            size={productData.mediumSizeName}
+            price={productData.mediumSizePrice}
+            variable={isMediumSizeSelected}
+            function={mediumSizeHandler} />
+          <PickerButton
+            stylesContainer={{ width: 130 }}
+            stylesBadge={{ left: 55 }}
+            size={productData.largeSizeName}
+            price={productData.largeSizePrice}
+            variable={isLargeSizeSelected}
+            function={largeSizeHandler} />
+        </View>
+      )
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.headerTitleView}>
-          <Text style={styles.headerText}>{productData.name}</Text>
+          <Text style={styles.headerText} numberOfLines={1}>{productData.name}</Text>
         </View>
         <View style={styles.headerPriceView}>
-          {isProductSelected == true ? (
+          {(isProductSelected == true && gridCounter > 1) ? (
             <View style={{ marginRight: 5 }}>
               <Button
                 title="cancel"
@@ -47,7 +102,7 @@ const ProductItem = (props) => {
             )}
           <View style={{ width: '55%' }}>
             <Button
-              title={isProductSelected == true ? 'Submit' : 'To Cart'}
+              title={isProductSelected == true ? (gridCounter > 1 ? 'Submit' : 'Added') : 'To Cart'}
               color="green"
               disabled={
                 (isProductSelected == true ? true : false) &&
@@ -67,27 +122,8 @@ const ProductItem = (props) => {
           </View>
         </View>
       </View>
-      {isProductSelected == true ? (
-        <View style={styles.buttonsContainer}>
-          <PickerButton
-            size={productData.smallSizeName}
-            price={productData.smallSizePrice}
-            variable={isSmallSizeSelected}
-            function={smallSizeHandler} />
-          <PickerButton
-            size={productData.mediumSizeName}
-            price={productData.mediumSizePrice}
-            variable={isMediumSizeSelected}
-            function={mediumSizeHandler} />
-          <PickerButton
-            size={productData.largeSizeName}
-            price={productData.largeSizePrice}
-            variable={isLargeSizeSelected}
-            function={largeSizeHandler} />
-        </View>
-      ) : null
-      }
-    </View>
+      {(isProductSelected == true && gridCounter > 1) ? <GridWithPickerButtons /> : null}
+    </View >
   );
 };
 

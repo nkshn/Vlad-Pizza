@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Platform, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const ActivatedTopBadge = () => {
+const ActivatedTopBadge = (props) => {
   return (
-    <View style={styles.activeBadgeContainer}>
+    <View style={[styles.activeBadgeContainer, { ...props.style }]}>
       <View style={styles.activeBadgeIconView}>
         <Ionicons
           name={Platform.OS == 'android' ? 'md-checkmark' : 'ios-checkmark'}
@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     bottom: 76,
-    left: 40,
     borderColor: 'red',
     borderWidth: 0.7,
     borderRadius: 20,

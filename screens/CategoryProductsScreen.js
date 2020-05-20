@@ -5,7 +5,6 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { SUB_CATEGORIES, PRODUCTS } from '../data/dummy-data';
 
 // Components
-
 import ProductItem from '../components/shop/ProductItem';
 
 const HomeScreen = ({ route }) => {

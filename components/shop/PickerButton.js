@@ -14,10 +14,10 @@ import ActivatedTopBadge from '../UI/ActivatedTopBadge';
 const PickerButton = (props) => {
   return (
     <View>
-      {props.variable == true ? <ActivatedTopBadge /> : null}
+      {props.variable == true ? <ActivatedTopBadge style={props.stylesBadge} /> : null}
       <View style={{ overflow: 'hidden', borderRadius: 7 }}>
         <TouchableNativeFeedback onPress={() => props.function(props.variable)}>
-          <View style={[styles.buttonsBox, props.variable == true ? styles.activeButtonBox : '']}>
+          <View style={[styles.buttonsBox, props.variable == true ? styles.activeButtonBox : '', { ...props.stylesContainer }]}>
             <View style={styles.buttonsTextContainer}>
               <Text style={[styles.buttonsText, props.variable == true ? { color: 'white' } : '']}>
                 {props.size}
