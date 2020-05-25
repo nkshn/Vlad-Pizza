@@ -4,8 +4,14 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 // Shop components
 import PickerButton from '../shop/PickerButton';
 
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+import * as cartActions from '../../store/actions/cart';
+
 const ProductItem = (props) => {
   const { productData } = props;
+
+  const dispatch = useDispatch();
 
   const [isProductSelected, setIsProductSelected] = useState(false);
 
@@ -28,9 +34,15 @@ const ProductItem = (props) => {
   };
 
   let gridCounter = 0;
-  if (productData.isSmallSize == true) { gridCounter += 1; }
-  if (productData.isMediumSize == true) { gridCounter += 1; }
-  if (productData.isLargeSize == true) { gridCounter += 1; }
+  if (productData.isSmallSize == true) {
+    gridCounter += 1;
+  }
+  if (productData.isMediumSize == true) {
+    gridCounter += 1;
+  }
+  if (productData.isLargeSize == true) {
+    gridCounter += 1;
+  }
 
   const GridWithPickerButtons = () => {
     if (gridCounter == 3) {
@@ -42,54 +54,64 @@ const ProductItem = (props) => {
             size={productData.smallSizeName}
             price={productData.smallSizePrice}
             variable={isSmallSizeSelected}
-            function={smallSizeHandler} />
+            function={smallSizeHandler}
+          />
           <PickerButton
             stylesContainer={{ width: 90 }}
             stylesBadge={{ left: 37 }}
             size={productData.mediumSizeName}
             price={productData.mediumSizePrice}
             variable={isMediumSizeSelected}
-            function={mediumSizeHandler} />
+            function={mediumSizeHandler}
+          />
           <PickerButton
             stylesContainer={{ width: 90 }}
             stylesBadge={{ left: 37 }}
             size={productData.largeSizeName}
             price={productData.largeSizePrice}
             variable={isLargeSizeSelected}
-            function={largeSizeHandler} />
+            function={largeSizeHandler}
+          />
         </View>
-      )
-    }
-    else if (gridCounter == 2) {
+      );
+    } else if (gridCounter == 2) {
       return (
-        <View style={[styles.buttonsContainer, { justifyContent: 'space-around' }]}>
+        <View
+          style={[styles.buttonsContainer, { justifyContent: 'space-around' }]}
+        >
           <PickerButton
             stylesContainer={{ width: 130 }}
             stylesBadge={{ left: 55 }}
             size={productData.mediumSizeName}
             price={productData.mediumSizePrice}
             variable={isMediumSizeSelected}
-            function={mediumSizeHandler} />
+            function={mediumSizeHandler}
+          />
           <PickerButton
             stylesContainer={{ width: 130 }}
             stylesBadge={{ left: 55 }}
             size={productData.largeSizeName}
             price={productData.largeSizePrice}
             variable={isLargeSizeSelected}
-            function={largeSizeHandler} />
+            function={largeSizeHandler}
+          />
         </View>
-      )
+      );
     }
   };
+
+  const cartITEMS = useSelector((state) => state.cart.products);
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.headerTitleView}>
-          <Text style={styles.headerText} numberOfLines={1}>{productData.name}</Text>
+          <Text style={styles.headerText} numberOfLines={1}>
+            {productData.name}
+          </Text>
         </View>
         <View style={styles.headerPriceView}>
-          {(isProductSelected == true && gridCounter > 1) ? (
+          {isProductSelected == true && gridCounter > 1 ? (
             <View style={{ marginRight: 5 }}>
               <Button
                 title="cancel"
@@ -98,11 +120,17 @@ const ProductItem = (props) => {
               />
             </View>
           ) : (
-              <View></View>
-            )}
+            <View></View>
+          )}
           <View style={{ width: '55%' }}>
             <Button
-              title={isProductSelected == true ? (gridCounter > 1 ? 'Submit' : 'Added') : 'To Cart'}
+              title={
+                isProductSelected == true
+                  ? gridCounter > 1
+                    ? 'Submit'
+                    : 'Added'
+                  : 'To Cart'
+              }
               color="green"
               disabled={
                 (isProductSelected == true ? true : false) &&
@@ -117,13 +145,24 @@ const ProductItem = (props) => {
                 setIsSmallSizeSelected(false);
                 setIsMediumSizeSelected(false);
                 setIsLargeSizeSelected(false);
+
+                if (
+                  isSmallSizeSelected ||
+                  isMediumSizeSelected ||
+                  isLargeSizeSelected
+                ) {
+                  dispatch(cartActions.addProductToCart(productData));
+                }
               }}
             />
           </View>
         </View>
+        <Button title="log" onPress={() => console.log(cartITEMS)} />
       </View>
-      {(isProductSelected == true && gridCounter > 1) ? <GridWithPickerButtons /> : null}
-    </View >
+      {isProductSelected == true && gridCounter > 1 ? (
+        <GridWithPickerButtons />
+      ) : null}
+    </View>
   );
 };
 
